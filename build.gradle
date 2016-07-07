@@ -1,0 +1,51 @@
+plugins {
+    id 'scala'
+    id 'maven'
+    id "com.qixalite.spongestart" version "1.4.7"
+    id 'org.spongepowered.plugin' version '0.6'
+}
+
+group 'us.illyohs.bannedblocks'
+version '1.0.0'
+
+spongestart{
+    eula true
+
+    //optional configs
+    spongeVanillaBuild 'LATEST'
+    spongeForgeBuild 'LATEST'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+
+}
+
+configurations {
+    deployerJars
+}
+
+dependencies {
+    compile 'org.spongepowered:spongeapi:4.1.0'
+    compile 'org.scala-lang:scala-library:2.11.1'
+    deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
+
+}
+
+
+uploadArchives {
+
+    repositories.mavenDeployer {
+
+        configuration = configurations.deployerJars
+        repository(url: mavenrelurl) {
+            authentication(userName: mavenuser, password: key)
+        }
+
+    }
+}
